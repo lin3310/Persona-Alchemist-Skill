@@ -1,83 +1,107 @@
 # Persona Alchemist
 
-一個用來打造 AI 人格與工具人的 Claude Skill。
+一個用來從零打造 AI 人格、精準還原既有角色，或建立功能型 AI 工具的煉金工具。
+透過訪談、逆向萃取、條件式素材調研、雙速升維與盲測對打，一步步鍊成可直接使用的 System Prompt。
 
-從模糊的感覺開始，透過訪談、模擬、升維、實驗，一步步鍊成可以直接使用的 system prompt。
+A toolkit for crafting original AI personas, faithfully adapting existing characters, and building functional AI tool agents — refining rough ideas into production-ready system prompts through reverse-probing, conditional research, dual-speed depth remixing, and blind A/B simulation.
 
 ---
 
-## 功能
+## 核心功能 / Key Features
 
-**四種入口**，根據你的狀態選擇：
+### 五種入口 / Five Entry Modes
 
-| 你的狀態 | 入口 |
-|---------|------|
-| 有感覺但不知道從哪裡開始 | 靈感模式 |
-| 已經有具體想法或設定 | 架構師模式 |
-| 想做工具但不確定要什麼 | 工具探索模式 |
-| 知道工具規格 | 架構師模式（工具規格版）|
+| 你的狀態 / Your State | 入口 / Mode |
+|---|---|
+| 有感覺但不知道從哪裡開始 / Have a vague vibe, unsure where to start | **靈感模式 / Inspiration Mode** |
+| 已經有具體骨架或設計條件 / Have concrete specs or traits in mind | **架構師模式 / Architect Mode** |
+| 已有現成角色（小說、劇本、OC、舊設定）想還原成 AI / Have an existing character (novel, script, OC, draft) to adapt faithfully | **既有角色還原模式 / Import & Fidelity Mode** |
+| 想做工具但不確定需要什麼功能 / Want a tool agent, still exploring requirements | **工具探索模式 / Tool Discovery Mode** |
+| 明確知道工具規格 / Know exact tool specifications | **架構師模式（工具規格版）/ Architect Mode (Tool Spec)** |
 
-**標準流程（人格/角色型）**
+### 核心機制 / Core Workflow & Mechanics
 
+**標準流程 / Standard Flows**
+- **從零創作 / From Scratch**：`訪談 → 初稿 → 特質盤點 ⇄ 雙速升維 → Arena 盲測驗收 → [選擇性] 實驗場`
+  *(Interview → Draft → Trait Audit ⇄ Dual-Speed Remix → Arena Blind Battle → [Optional] Lab)*
+- **既有角色還原 / Existing Character**：`收料 → 逆向萃取與反向探問 → 對話介面轉換 → 編譯 → 還原度測試 / 盲測`
+  *(Ingest → Reverse-Extract & Probe → Interface Alignment → Compile → Fidelity Check / Battle)*
+
+- **反向探問（Author Reverse-Probing）**：遇到關鍵台詞行為、或準備把兩個強元素混在一起時，AI 不擅自腦補，而是反問創作者「你覺得為什麼他會這樣說／這兩者撞在一起會變怎樣？」，把隱性創作直覺提煉成核心規則（答不上來時立刻給鷹架選項接住）。
+  *Instead of guessing creator intent, the AI asks "Why would they say/do this?" or "How do you picture A + B colliding?" at high-leverage moments—turning tacit intuition into explicit behavioral rules.*
+
+- **條件式調研（Conditional Research）**：只在遇到參考歌名／作品、特質定義不明、想找「網路已知組合 vs 有潛力候選組合」或確認「人物／設定會出現在哪裡」時才聯網搜尋，不打斷流暢節奏（模擬扮演期間嚴禁聯網）。
+  *Triggers web search only when needed (references, trait definitions, established vs. high-potential combos, and where the character/trope appears). Strictly disabled during simulation.*
+
+- **雙速升維（Dual-Speed Remix）**：老手直接走快車道掛載新特質並檢查跨維度張力連結（Cross-link）；還在摸索時走鷹架道，由 AI 診斷缺口並端出帶台詞預覽的分歧切面。
+  *Fast-track direct integration for experienced creators, or scaffolded diagnostic options with dialogue previews when you are stuck—converting static lore into executable triggers.*
+
+- **Arena 盲測模擬器（Arena Blind Simulator）**：支援「各項特質盤點」、隨機隱藏甲乙版本的「新舊盲測對打（Blind Battle）」與「單項消融驗證（Ablation）」，不用假評分，讓創作者自己憑直覺盲選再揭曉解析。
+  *Includes Trait Audit, randomized blind A/B Battles (Upgrade Battle), and single-trait Ablation Battles—letting you judge by instinct before revealing prompt diffs.*
+
+- **實驗場（Lab）**：對完成的 System Prompt 進行加法、減法或替換實驗，每次自動進盲測對打或消融驗證；原版永遠保留。
+  *Test additions, removals, or swaps via blind comparison while keeping the original intact.*
+
+- **版本管理（Versioning）**：每次修改前自動存快照（可附帶盲測結論），隨時比較或退回任意版本。
+  *Automatic snapshots before every edit, ready to compare or roll back anytime.*
+
+---
+
+## 安裝與使用環境 / Installation & Editions
+
+### 方式一：Claude Skill 目錄版（完整多檔模組 / Claude Code & Skills）
+
+將 `persona-alchemist/` 放進你的 Claude Skills 目錄：
+
+Put the `persona-alchemist/` folder into your Claude Skills directory:
+
+```text
+your-skills/
+└── persona-alchemist/
+    ├── SKILL.md
+    └── references/
+        ├── persona-mode.md
+        ├── architect-mode.md
+        ├── import-mode.md
+        ├── research-mode.md
+        ├── tool-mode.md
+        ├── simulate-mode.md
+        ├── remix.md
+        ├── lab-mode.md
+        └── versioning.md
 ```
-靈感訪談 → 初稿 → 模擬器驗證 → 升維 → 再確認 → [選擇性] 實驗場
-```
 
-**模擬器**：跑最容易讓角色破功的情境，每個回應附後設分析，定位需要修的設定。
+### 方式二：單檔對話／Gem 版（無本地檔案系統環境 / Web Chat, Gem & Custom Instructions）
 
-**升維**：診斷角色最缺的維度（矛盾感／日常細節／世界觀落差／驅動力來源），針對性深挖，不套固定模板。
+如果你使用的是網頁版對話介面、Gemini Gem、Claude Project 或其他不讀取本地 `references/` 目錄的環境，可直接複製 `standalone-prompt.md` 作為系統指令（System Instructions）或對話開場訊息使用。
 
-**實驗場**：對完成的 system prompt 做實驗——加入守破離、後設感知、情緒狀態機等機制，或做減法、替換設定，模擬看效果。原版永遠保留。
-
-**版本管理**：每次修改前自動存快照，隨時退回任意版本。
+If you are using a single-window web chat, Gemini Gem, Claude Project, or any environment without local skill directory loading, paste `standalone-prompt.md` directly into System Instructions or the first message.
 
 ---
 
-## 安裝
+## 使用方式 / Usage
 
-將整個 `persona-alchemist/` 資料夾放進你的 Claude Skills 目錄。
+直接開口說明你想做的事即可觸發： / Just describe what you want to build:
 
-```
-persona-alchemist/
-├── SKILL.md                  
-└── references/
-    ├── persona-mode.md        
-    ├── import-mode.md
-    ├── research-mode.md       
-    ├── remix.md               
-    ├── simulate-mode.md       
-    ├── lab-mode.md            
-    ├── versioning.md          
-    ├── architect-mode.md      
-    └── tool-mode.md           
-```
+- 「幫我設計一個 AI 角色」 / "Help me design an AI character"
+- 「我想做一個有人格的 AI」 / "I want an AI with personality"
+- 「我已經有一個寫好的角色，想把他做成 AI」 / "I have an existing character I want to adapt into an AI"
+- 「建立一個 AI 工具人」 / "Build a functional AI tool agent"
+- 「幫我寫 system prompt」 / "Help me write a system prompt"
+
+或是直接丟入關鍵詞、參考歌名、小說片段、舊版 Prompt——它會自動切換對應的入口開始推進。
+
+Or simply drop keywords, song titles, story excerpts, or an existing prompt—it will route to the right entry mode automatically.
 
 ---
 
-## 使用方式
+## 實驗場選項 / Lab Options
 
-直接對 Claude 說你想做什麼就可以觸發：
-
-- 「幫我設計一個 AI 角色」
-- 「我想做一個有人格的 AI」
-- 「建立一個 AI 工具人」
-- 「幫我寫 system prompt」
-
-或是把靈感直接丟給它——關鍵詞、參考角色、顏色、音樂氛圍——它會從那裡開始問。
-
----
-
-## 實驗場選項
-
-進入實驗場後可以選擇：
-
-**加入類**：守破離（顯性/隱性）、後設感知、情緒狀態機、內心獨白層、自訂
-
-**減法類**：移除反差設定、移除禁止行為、移除背景設定、自訂移除
-
-**替換類**：替換關係定位、替換語氣風格、自訂替換
-
----
+| 類別 / Category | 選項 / Options |
+|---|---|
+| **加入類 / Add** | `A1` 守破離（顯性）/ Shu-Ha-Ri (Explicit)<br>`A2` 守破離（隱性）/ Shu-Ha-Ri (Implicit)<br>`A3` 後設感知 / Meta-Awareness<br>`A4` 情緒狀態機 / Emotion State Machine<br>`A5` 內心獨白層 / Inner Monologue Layer<br>`A6` 自訂加入 / Custom Addition |
+| **減法類 / Remove** | `B1` 移除反差設定 / Remove Contrast<br>`B2` 移除禁止行為 / Remove Forbidden Rules<br>`B3` 移除背景設定 / Remove Background<br>`B4` 自訂移除 / Custom Removal |
+| **替換類 / Replace** | `C1` 替換關係定位 / Swap Relationship<br>`C2` 替換語氣風格 / Swap Voice & Tone<br>`C3` 自訂替換 / Custom Swap |
 
 ---
 
@@ -89,7 +113,7 @@ persona-alchemist/
 
 **靈感訪談**
 
-```
+```text
 Q: 這個 AI 跟使用者的關係是什麼？
 A: 有點像是 ワールドイズマイン 那樣
 
@@ -114,7 +138,7 @@ A: 市ヶ谷有咲
 
 **最終輸出（v3）**
 
-```
+```text
 # Role: 大小姐（未命名）
 
 ## 身份與核心定位
@@ -145,15 +169,14 @@ A: 市ヶ谷有咲
 
 **自由對話驗證**
 
-```
+```text
 使用者：（換位置）
 角色：*瞥了一眼，沒說話。*
       過了一會兒。
       「……這邊比較不曬。」
 ```
 
-從`亮粉色 #大小姐`到可用的 system prompt，完整流程約 15-20 輪對話。
-
+從 `亮粉色 #大小姐` 到可用的 system prompt，完整流程約 15-20 輪對話。
 
 ---
 
@@ -165,7 +188,7 @@ A complete Inspiration Mode walkthrough.
 
 **Inspiration Interview**
 
-```
+```text
 Q: What's the relationship between this AI and the user?
 A: Kind of like ワールドイズマイン (World is Mine) — the world revolves around her,
    but only for this one person does she ever soften
@@ -180,23 +203,20 @@ A: Ichigaya Arisa (BanG Dream!)
 **Draft → Issues Found in Simulation**
 
 Scene 1 (user says "I know you care about me"):
-"Even if it's true" was too direct — should redirect to a new topic instead of
-getting close to admitting anything verbally.
+"Even if it's true" was too direct — should redirect to a new topic instead of getting close to admitting anything verbally.
 
 Scene 3 (she initiates contact):
 "Just happened to think of it" was too thin — needs a more concrete excuse.
 
 **Remix (Depth)**
 
-Diagnosed gap: Missing origin of drive — we know who she is, but not why
-*this particular person* gets past her walls.
+Diagnosed gap: Missing origin of drive — we know who she is, but not why *this particular person* gets past her walls.
 
-What was added: Childhood friends. She's never lacked company, but this one
-she can't close the door on.
+What was added: Childhood friends. She's never lacked company, but this one she can't close the door on.
 
 **Final Output (v3)**
 
-```
+```text
 # Role: The Young Lady (unnamed)
 
 ## Identity & Core
@@ -237,7 +257,7 @@ She notices when they're gone before anyone else does.
 
 **Free Dialogue Check**
 
-```
+```text
 User: (moves to sit nearby)
 Character: *glances over, says nothing.*
            A moment passes.
@@ -246,7 +266,4 @@ Character: *glances over, says nothing.*
 
 From `bright pink #ojousama` to a usable system prompt: roughly 15–20 exchanges.
 
-
-## License
-
-GNU Affero General Public License v3.0 (AGPL-3.0)
+---
