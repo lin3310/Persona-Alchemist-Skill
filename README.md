@@ -38,17 +38,18 @@
 將整個 `persona-alchemist/` 資料夾放進你的 Claude Skills 目錄。
 
 ```
-your-skills/
-└── persona-alchemist/
-    ├── SKILL.md
-    └── references/
-        ├── persona-mode.md
-        ├── architect-mode.md
-        ├── tool-mode.md
-        ├── simulate-mode.md
-        ├── remix.md
-        ├── lab-mode.md
-        └── versioning.md
+persona-alchemist/
+├── SKILL.md                  
+└── references/
+    ├── persona-mode.md        
+    ├── import-mode.md
+    ├── research-mode.md       
+    ├── remix.md               
+    ├── simulate-mode.md       
+    ├── lab-mode.md            
+    ├── versioning.md          
+    ├── architect-mode.md      
+    └── tool-mode.md           
 ```
 
 ---
